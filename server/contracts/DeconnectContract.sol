@@ -5,19 +5,18 @@ contract DeconnectContract {
     event DeletePost(uint postId, bool isDeleted);
     
     struct Post {
-        unit id;
+        uint id;
         address username;
         string postContent;
-        unit likes;
         bool isDeleted;
     }
 
     Post[] private posts;
 
-    mapping(uint => address) postToOwner;
+    mapping(uint256 => address) postToOwner;
 
     function addPost(string memory postContent, bool isDeleted) external {
-        unit postId = posts.length;
+        uint postId = posts.length;
         posts.push(Post(postId, msg.sender, postContent, isDeleted));
         postToOwner[postId] = msg.sender;
         emit AddPost(msg.sender, postId);
@@ -27,7 +26,7 @@ contract DeconnectContract {
 
         uint counter = 0;
         for (uint i = 0; i < posts.length; i++) {
-            if (!posts[i].isDeleted) {
+            if (posts[i].isDeleted == false) {
                 temporary[counter] = posts[i];
                 counter++;
             }
